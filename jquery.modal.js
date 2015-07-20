@@ -10,7 +10,7 @@
     $.modal.close(); // Close any open modals.
     var remove, target;
     this.$body = $('body');
-    this.options = $.extend({}, $.modal.defaults, options);
+    this.options = $.extend({}, $.modal.defaults, options, (el.data('modalOptions') || {}));
     this.options.doFade = !isNaN(parseInt(this.options.fadeDuration, 10));
     if (el.is('a')) {
       target = el.attr('href');
@@ -22,6 +22,9 @@
       //AJAX
       } else {
         this.$elm = $('<div>');
+        if(this.options.ajaxId) {
+          this.$elm.attr('id', this.options.ajaxId);
+        }
         this.$body.append(this.$elm);
         remove = function(event, modal) { modal.elm.remove(); };
         this.showSpinner();
